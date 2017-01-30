@@ -26,7 +26,7 @@ import javax.swing.KeyStroke;
  */
 @SuppressWarnings("serial")
 public class MenuPanel extends JPanel {
-
+    
     private JLabel blackBalls;
     private JLabel whiteBalls;
     private BoardPanel boardPanel;
@@ -72,8 +72,8 @@ public class MenuPanel extends JPanel {
         buttonPanel.add(dropDownSize);
         dropDownSize.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent event) {
-                boardPanel.changeBoardSize((int) dropDownSize
-                        .getSelectedItem());
+                boardPanel.changeBoardSize((int)
+                                           dropDownSize.getSelectedItem());
             }
         });
         buttonPanel.add(labelLevel);
@@ -144,7 +144,7 @@ public class MenuPanel extends JPanel {
      *            the function which will be executed
      */
     private void addShortcut(JButton button, char key,
-            Callable<Void> function) {
+                             Callable<Void> function) {
         button.setMnemonic(key);
         String actionName = null;
         Action buttonAction = new AbstractAction() {
@@ -171,12 +171,12 @@ public class MenuPanel extends JPanel {
             new IllegalArgumentException("Key not allowed");
             break;
         }
-        buttonAction.putValue(Action.ACCELERATOR_KEY, KeyStroke.getKeyStroke(
-                "control " + key));
+        buttonAction.putValue(Action.ACCELERATOR_KEY, 
+                              KeyStroke.getKeyStroke("control " + key));
         button.getActionMap().put(actionName, buttonAction);
         button.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(
-                (KeyStroke) buttonAction.getValue(Action.ACCELERATOR_KEY),
-                actionName);
+                      (KeyStroke) buttonAction.getValue(Action.ACCELERATOR_KEY),
+                                                        actionName);
     }
 
     /**
@@ -188,10 +188,8 @@ public class MenuPanel extends JPanel {
      *            the current amount of white balls on the field
      */
     public void setBallAmount(int blackBallAmount, int whiteBallAmount) {
-        String blackBallText = Integer.toString(blackBallAmount);
-        String whiteBallText = Integer.toString(whiteBallAmount);
-        blackBalls.setText(blackBallText);
-        whiteBalls.setText(whiteBallText);
+        blackBalls.setText(Integer.toString(blackBallAmount));
+        whiteBalls.setText(Integer.toString(whiteBallAmount));
     }
 
     /**

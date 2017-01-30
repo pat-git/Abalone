@@ -24,9 +24,8 @@ public class SlotPanel extends SelectablePanel {
      * @param position
      *            the position of the slot
      */
-    public SlotPanel(Color color, Position position) {
+    public SlotPanel(Position position) {
         super(position);
-        this.color = color;
     }
 
     /**
@@ -43,7 +42,7 @@ public class SlotPanel extends SelectablePanel {
         int width = getWidth();
         super.paintComponent(graphic);
         color = ((BoardPanel) getParent()).getSlot(getPosition().getRow(),
-                getPosition().getDiag());
+                                                   getPosition().getDiag());
         if (color != null) {
             graphic.setColor(getCircleColor(color));
             // paint a circle with the color of the slot

@@ -25,6 +25,7 @@ import abalone.model.Utility;
  */
 @SuppressWarnings("serial")
 public class BoardPanel extends JPanel {
+
     private Board abalone;
     private GUI gui;
     private int boardSize;
@@ -108,7 +109,7 @@ public class BoardPanel extends JPanel {
      */
     private void updateBallAmount() {
         gui.getMenuPanel().setBallAmount(abalone.getNumberOfBalls(Color.BLACK),
-                abalone.getNumberOfBalls(Color.WHITE));
+                                         abalone.getNumberOfBalls(Color.WHITE));
     }
 
     /**
@@ -173,8 +174,8 @@ public class BoardPanel extends JPanel {
             for (int diag = 0; diag <= amount; diag++) {
                 add(new PlaceholderPanel());
             }
-            JPanel edgePanel = new SelectablePanel(new Position(row, minDiag
-                    - 1));
+            JPanel edgePanel = new SelectablePanel(new Position(row, 
+                                                                minDiag - 1));
             addMouseListener(edgePanel);
             add(edgePanel);
             add(new LinePanel());
@@ -182,8 +183,7 @@ public class BoardPanel extends JPanel {
             for (int diag = minDiag; diag <= maxDiag; diag++) {
                 JPanel panelToAdd;
                 if (row < boardSize && row >= 0) {
-                    panelToAdd = new SlotPanel(abalone.getSlot(row, diag),
-                            new Position(row, diag));
+                    panelToAdd = new SlotPanel(new Position(row, diag));
                 } else {
                     panelToAdd = new SelectablePanel(new Position(row, diag));
                 }
@@ -191,8 +191,8 @@ public class BoardPanel extends JPanel {
                 add(panelToAdd);
                 add(new LinePanel());
             }
-            JPanel edgePanel2 = new SelectablePanel(new Position(row, maxDiag
-                    + 1));
+            JPanel edgePanel2 = new SelectablePanel(new Position(row, 
+                                                                 maxDiag+ 1));
             addMouseListener(edgePanel2);
             add(edgePanel2);
             // Add placeholder after the panel with the lowest diagonal
@@ -213,17 +213,17 @@ public class BoardPanel extends JPanel {
     private void addMouseListener(JPanel panel) {
         panel.addMouseListener(new MouseAdapter() {
             public void mouseClicked(MouseEvent event) {
-                SelectablePanel selectedPanel = (SelectablePanel) event
-                        .getComponent();
+                SelectablePanel selectedPanel = (SelectablePanel) 
+                                                event.getComponent();
                 if (firstSelectedSlot != null) {
-                    performMove(firstSelectedSlot.getPosition(), selectedPanel
-                            .getPosition());
+                    performMove(firstSelectedSlot.getPosition(), 
+                                selectedPanel.getPosition());
                     ((SlotPanel) firstSelectedSlot).setHighlighted(false);
                     firstSelectedSlot = null;
                 } else {
                     if (selectedPanel instanceof SlotPanel
-                            && ((SlotPanel) selectedPanel).getColor() == abalone
-                                    .getHumanColor()) {
+                        && ((SlotPanel) selectedPanel).getColor() 
+                           == abalone.getHumanColor()) {
                         firstSelectedSlot = selectedPanel;
                         ((SlotPanel) selectedPanel).setHighlighted(true);
                     } else {
@@ -250,7 +250,7 @@ public class BoardPanel extends JPanel {
     private void createErrorDialog(String message) {
         playErrorSound();
         JOptionPane.showMessageDialog(gui, message, "Error",
-                JOptionPane.ERROR_MESSAGE);
+                                      JOptionPane.ERROR_MESSAGE);
     }
 
     /**
@@ -261,7 +261,7 @@ public class BoardPanel extends JPanel {
      */
     private void createDialog(String message) {
         JOptionPane.showMessageDialog(gui, message, "",
-                JOptionPane.INFORMATION_MESSAGE);
+                                      JOptionPane.INFORMATION_MESSAGE);
     }
 
     private void createWinDialog() {
@@ -343,7 +343,7 @@ public class BoardPanel extends JPanel {
             }
         } else {
             createErrorDialog("The game is over, press new or switch to create"
-                    + "a new game");
+                              + "a new game");
         }
         return false;
     }
