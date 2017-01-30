@@ -31,13 +31,10 @@ import java.util.List;
  * 
  * @version 1.0
  */
-
 public class AbaloneBoard implements Board, Cloneable {
 
     private int boardSize;
     private boolean machineIsBeginner = false;
-    private Player human;
-    private Player machine;
     private Player lastPlayer;
     private Color humanColor;
     private Color machineColor;
@@ -52,15 +49,7 @@ public class AbaloneBoard implements Board, Cloneable {
      * filled with the default constellation of balls.
      */
     public AbaloneBoard() {
-        boardSize = 9;
-        board = new Slot[boardSize][boardSize];
-        human = Player.HUMAN;
-        machine = Player.MACHINE;
-        humanColor = Color.BLACK;
-        machineColor = Color.WHITE;
-        level = 2;
-        initializeBoard();
-        ballAmount = playerBallList.size();
+        this(9, false);
     }
 
     /**
@@ -75,22 +64,20 @@ public class AbaloneBoard implements Board, Cloneable {
      * @throws IllegalArgumentException
      *             if the boardSize is invalid
      */
-    public AbaloneBoard(int boardSize, boolean machineIsBeginner) throws IllegalArgumentException {
+    public AbaloneBoard(int boardSize, boolean machineIsBeginner) {
         if (boardSize >= MIN_SIZE && boardSize % 2 != 0) {
             this.boardSize = boardSize;
         } else {
             throw new IllegalArgumentException("Invalid boardsize");
         }
         board = new Slot[boardSize][boardSize];
-        human = Player.HUMAN;
-        machine = Player.MACHINE;
         this.machineIsBeginner = machineIsBeginner;
         // Change to the right color if the beginner has been changed to machine
         if (!machineIsBeginner) {
             humanColor = Color.BLACK;
             machineColor = Color.WHITE;
         } else {
-            lastPlayer = human;
+            lastPlayer = Player.HUMAN;
             humanColor = Color.WHITE;
             machineColor = Color.BLACK;
         }
@@ -108,16 +95,16 @@ public class AbaloneBoard implements Board, Cloneable {
             addEmptySlotsToRow(row);
         }
         for (int row = 0; row < 2; row++) {
-            fillRowWithBalls(row, human, false);
+            fillRowWithBalls(row, Player.HUMAN, false);
         }
-        fillRowWithBalls(2, human, true);
+        fillRowWithBalls(2, Player.HUMAN, true);
         /*
          * Fill machine balls in a different order because of the reverse order
          * of the balls in the machineBallList
          */
-        fillRowWithBalls(boardSize - 3, machine, true);
+        fillRowWithBalls(boardSize - 3, Player.HUMAN, true);
         for (int row = boardSize - 2; row < boardSize; row++) {
-            fillRowWithBalls(row, machine, false);
+            fillRowWithBalls(row, Player.HUMAN, false);
         }
         Collections.reverse(machineBallList);
     }
@@ -152,7 +139,7 @@ public class AbaloneBoard implements Board, Cloneable {
                     skippedSlots++;
                 } else {
                     Ball newBall;
-                    if (player.equals(human)) {
+                    if (player.equals(Player.HUMAN)) {
                         newBall = new Ball(humanColor);
                         newBall.changePosition(new Position(row, diag));
                         playerBallList.add(newBall);
@@ -170,7 +157,7 @@ public class AbaloneBoard implements Board, Cloneable {
             // Removes last two balls in this row and in the list
             board[row][lastDiag].removeBall();
             board[row][lastDiag - 1].removeBall();
-            if (player.equals(human)) {
+            if (player.equals(Player.HUMAN)) {
                 playerBallList.remove(playerBallList.size() - 1);
                 playerBallList.remove(playerBallList.size() - 1);
             } else {
@@ -230,9 +217,9 @@ public class AbaloneBoard implements Board, Cloneable {
     @Override
     public Player getOpeningPlayer() {
         if (machineIsBeginner) {
-            return machine;
+            return Player.MACHINE;
         } else {
-            return human;
+            return Player.HUMAN;
         }
     }
 
@@ -251,17 +238,17 @@ public class AbaloneBoard implements Board, Cloneable {
     public Player getNextPlayer() {
         if (lastPlayer == null) {
             return getOpeningPlayer();
-        } else if (lastPlayer == human) {
-            if (!canMove(machine)) {
-                return human;
+        } else if (lastPlayer == Player.HUMAN) {
+            if (!canMove(Player.MACHINE)) {
+                return Player.HUMAN;
             } else {
-                return machine;
+                return Player.MACHINE;
             }
         } else {
-            if (!canMove(human)) {
-                return machine;
+            if (!canMove(Player.HUMAN)) {
+                return Player.MACHINE;
             } else {
-                return human;
+                return Player.HUMAN;
             }
         }
     }
@@ -436,7 +423,7 @@ public class AbaloneBoard implements Board, Cloneable {
                     // ball should be moved to the outside -> just delete it
                     Ball removedBall = result.board[rowFrom][diagFrom]
                                                                   .removeBall();
-                    if (getNextPlayer() == human) {
+                    if (getNextPlayer() == Player.HUMAN) {
                         result.playerBallList.remove(removedBall);
                     } else {
                         result.machineBallList.remove(removedBall);
@@ -649,7 +636,7 @@ public class AbaloneBoard implements Board, Cloneable {
             Player player = node.getBoard().getNextPlayer();
             double minMaxOfChildren = calculateGameSituation(node.getChildren()
                                                                        .get(0));
-            if (player != human) {
+            if (player != Player.HUMAN) {
                 for (Node child : node.getChildren()) {
                     double currentValue = calculateGameSituation(child);
                     if (currentValue < minMaxOfChildren) {
@@ -689,7 +676,7 @@ public class AbaloneBoard implements Board, Cloneable {
         double ballAmountVal = board.machineBallList.size() 
                                - 1.5 * board.playerBallList.size();
         if (board.isGameOver()) {
-            if (human == board.getWinner()) {
+            if (Player.HUMAN == board.getWinner()) {
                 winVal = -1.5 * 50000000 / level;
             } else {
                 winVal = 50000000 / level;
@@ -770,7 +757,7 @@ public class AbaloneBoard implements Board, Cloneable {
                                              Player currentPlayer) {
         List<Board> result = new LinkedList<Board>();
         List<Ball> balls;
-        if (currentPlayer == human) {
+        if (currentPlayer == Player.HUMAN) {
             balls = board.playerBallList;
         } else {
             balls = board.machineBallList;
@@ -832,9 +819,9 @@ public class AbaloneBoard implements Board, Cloneable {
     public Player getWinner() {
         if (isGameOver()) {
             if (ELIM <= ballAmount - playerBallList.size()) {
-                return machine;
+                return Player.MACHINE;
             } else {
-                return human;
+                return Player.HUMAN;
             }
         }
         return null;
@@ -857,10 +844,15 @@ public class AbaloneBoard implements Board, Cloneable {
      */
     @Override
     public Color getSlot(int row, int diag) {
-        if (board[row][diag] != null && board[row][diag].getBall() != null) {
+        if(board[row][diag] == null){
+            return null;
+        } else
+        if (board[row][diag].getBall() != null) {
             return board[row][diag].getColor();
+        }else{
+            return Color.NONE;
         }
-        return Color.NONE;
+        
     }
 
     /**
@@ -916,9 +908,13 @@ public class AbaloneBoard implements Board, Cloneable {
      */
     @Override
     public Board clone() {
-        AbaloneBoard clone = new AbaloneBoard(boardSize, machineIsBeginner);
+        AbaloneBoard clone = null;
+        try {
+            clone = (AbaloneBoard) super.clone();
+        } catch (CloneNotSupportedException exception) {
+            exception.printStackTrace();
+        }
         clone.lastPlayer = this.lastPlayer;
-        clone.human = this.human;
         clone.humanColor = this.humanColor;
         clone.machineColor = this.machineColor;
         clone.level = this.level;
