@@ -102,9 +102,9 @@ public class AbaloneBoard implements Board, Cloneable {
          * Fill machine balls in a different order because of the reverse order
          * of the balls in the machineBallList
          */
-        fillRowWithBalls(boardSize - 3, Player.HUMAN, true);
+        fillRowWithBalls(boardSize - 3, Player.MACHINE, true);
         for (int row = boardSize - 2; row < boardSize; row++) {
-            fillRowWithBalls(row, Player.HUMAN, false);
+            fillRowWithBalls(row, Player.MACHINE, false);
         }
         Collections.reverse(machineBallList);
     }
@@ -852,7 +852,6 @@ public class AbaloneBoard implements Board, Cloneable {
         }else{
             return Color.NONE;
         }
-        
     }
 
     /**
@@ -908,12 +907,7 @@ public class AbaloneBoard implements Board, Cloneable {
      */
     @Override
     public Board clone() {
-        AbaloneBoard clone = null;
-        try {
-            clone = (AbaloneBoard) super.clone();
-        } catch (CloneNotSupportedException exception) {
-            exception.printStackTrace();
-        }
+        AbaloneBoard clone = new AbaloneBoard(boardSize, machineIsBeginner);
         clone.lastPlayer = this.lastPlayer;
         clone.humanColor = this.humanColor;
         clone.machineColor = this.machineColor;
