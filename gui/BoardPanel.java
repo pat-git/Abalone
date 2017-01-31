@@ -47,6 +47,7 @@ public class BoardPanel extends JPanel {
         boardSize = abalone.getSize();
         setLayout(new GridLayout(boardSize + 2, boardSize * 2));
         setupGrid();
+        
         // sets the background to color brown
         setBackground(new java.awt.Color(130, 70, 20));
         updateBallAmount();
@@ -179,6 +180,7 @@ public class BoardPanel extends JPanel {
             addMouseListener(edgePanel);
             add(edgePanel);
             add(new LinePanel());
+            
             // Add all panels which have a valid position on the board.
             for (int diag = minDiag; diag <= maxDiag; diag++) {
                 JPanel panelToAdd;
@@ -195,6 +197,7 @@ public class BoardPanel extends JPanel {
                                                                  maxDiag+ 1));
             addMouseListener(edgePanel2);
             add(edgePanel2);
+            
             // Add placeholder after the panel with the lowest diagonal
             // coordinates in the row.
             for (int diag = 0; diag <= amount; diag++) {
