@@ -27,7 +27,7 @@ import abalone.model.Utility;
 public class BoardPanel extends JPanel {
 
     private Board abalone;
-    private GUI gui;
+    private GameFrame frame;
     private int boardSize;
     private int level;
     private Thread machineMoveThread;
@@ -35,14 +35,14 @@ public class BoardPanel extends JPanel {
     private boolean playerMoveBlocked;
 
     /**
-     * Creates a BoardPanel with the given GUI. The GUI will be used to interact
-     * with it.
+     * Creates a BoardPanel with the given Frame. The Frame will be used to
+     * interact with it.
      * 
-     * @param gui
-     *            the GUI
+     * @param frame
+     *            the main frame
      */
-    public BoardPanel(GUI gui) {
-        this.gui = gui;
+    public BoardPanel(GameFrame frame) {
+        this.frame = frame;
         abalone = new AbaloneBoard();
         boardSize = abalone.getSize();
         setLayout(new GridLayout(boardSize + 2, boardSize * 2));
@@ -51,7 +51,7 @@ public class BoardPanel extends JPanel {
         // sets the background to color brown
         setBackground(new java.awt.Color(130, 70, 20));
         updateBallAmount();
-        gui.getMenuPanel().setBoardPanel(this);
+        frame.getMenuPanel().setBoardPanel(this);
     }
 
     /**
@@ -109,7 +109,7 @@ public class BoardPanel extends JPanel {
      * balls of the game.
      */
     private void updateBallAmount() {
-        gui.getMenuPanel().setBallAmount(abalone.getNumberOfBalls(Color.BLACK),
+        frame.getMenuPanel().setBallAmount(abalone.getNumberOfBalls(Color.BLACK),
                                          abalone.getNumberOfBalls(Color.WHITE));
     }
 
@@ -252,7 +252,7 @@ public class BoardPanel extends JPanel {
      */
     private void createErrorDialog(String message) {
         playErrorSound();
-        JOptionPane.showMessageDialog(gui, message, "Error",
+        JOptionPane.showMessageDialog(frame, message, "Error",
                                       JOptionPane.ERROR_MESSAGE);
     }
 
@@ -263,7 +263,7 @@ public class BoardPanel extends JPanel {
      *            the message of the dialog
      */
     private void createDialog(String message) {
-        JOptionPane.showMessageDialog(gui, message, "",
+        JOptionPane.showMessageDialog(frame, message, "",
                                       JOptionPane.INFORMATION_MESSAGE);
     }
 

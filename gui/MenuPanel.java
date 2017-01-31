@@ -32,7 +32,7 @@ public class MenuPanel extends JPanel {
     private BoardPanel boardPanel;
 
     /**
-     * Creates the menu panel of the gui of the game abalone.
+     * Creates the menu panel of the GUI of the game Abalone.
      * 
      * @param layout
      *            the layout of the panel
