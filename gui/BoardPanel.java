@@ -6,6 +6,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.SwingUtilities;
 import abalone.model.AbaloneBoard;
 import abalone.model.Board;
 import abalone.model.Color;
@@ -61,18 +62,23 @@ public class BoardPanel extends JPanel {
      * grid. While the thread is running the player can not move.
      */
     private void performMachineMove() {
+        Runnable updateGUI = new Runnable() {
+            public void run() {
+                repaint();
+                updateBallAmount();
+                if (abalone.isGameOver()) {
+                    createWinDialog();
+                }
+            }
+        };
         machineMoveThread = new Thread(new Runnable() {
             @Override
             public void run() {
                 playerMoveBlocked = true;
-                while (abalone.getNextPlayer() == Player.MACHINE) {
+                while (abalone.getNextPlayer() == Player.MACHINE 
+                       && !abalone.isGameOver()) {
                     abalone = abalone.machineMove();
-                    repaint();
-                    updateBallAmount();
-                    if (abalone.isGameOver()) {
-                        createWinDialog();
-                        return;
-                    }
+                    SwingUtilities.invokeLater(updateGUI);
                 }
                 playerMoveBlocked = false;
             }
@@ -346,7 +352,7 @@ public class BoardPanel extends JPanel {
             }
         } else {
             createErrorDialog("The game is over, press new or switch to create"
-                              + "a new game");
+                              + " a new game");
         }
         return false;
     }
