@@ -72,6 +72,7 @@ public class AbaloneBoard implements Board, Cloneable {
         }
         board = new Slot[boardSize][boardSize];
         this.machineIsBeginner = machineIsBeginner;
+
         // Change to the right color if the beginner has been changed to machine
         if (!machineIsBeginner) {
             humanColor = Color.BLACK;
@@ -261,7 +262,10 @@ public class AbaloneBoard implements Board, Cloneable {
      * {@inheritDoc}
      */
     @Override
-    public boolean isValidPosition(int row, int diag) {
+    public boolean isValidPosition(int row, int diag) { 
+        // The board[row][diag] is only null if there's no slot at this position
+        // that means that the given position is out of the game board and that
+        // means that the given position is invalid
         return isInsideArray(row, diag) && board[row][diag] != null;
     }
 
@@ -338,23 +342,19 @@ public class AbaloneBoard implements Board, Cloneable {
             if (ballList.get(i) != null) {
                 int row = ballList.get(i).getPosition().getRow();
                 int diag = ballList.get(i).getPosition().getDiag();
+                
                 // Directly returning true because of better performance
                 if (checkMove(row, diag, row + 1, diag)) {
                     return true;
-                }
-                if (checkMove(row, diag, row, diag + 1)) {
+                } else if (checkMove(row, diag, row, diag + 1)) {
                     return true;
-                }
-                if (checkMove(row, diag, row + 1, diag + 1)) {
+                } else if (checkMove(row, diag, row + 1, diag + 1)) {
                     return true;
-                }
-                if (checkMove(row, diag, row - 1, diag)) {
+                } else if (checkMove(row, diag, row - 1, diag)) {
                     return true;
-                }
-                if (checkMove(row, diag, row, diag - 1)) {
+                } else if (checkMove(row, diag, row, diag - 1)) {
                     return true;
-                }
-                if (checkMove(row, diag, row - 1, diag - 1)) {
+                } else if (checkMove(row, diag, row - 1, diag - 1)) {
                     return true;
                 }
             }
@@ -493,14 +493,13 @@ public class AbaloneBoard implements Board, Cloneable {
             Slot nextSlot = board[nextRow][nextDiag];
             if (nextSlot != null) {
                 if (nextSlot.getBall() != null) {
-                    if (nextSlot.getBall().getColor() == ballToMove
-                            .getColor()) {
+                    if (nextSlot.getBall().getColor() 
+                        == ballToMove.getColor()) {
                         if (enemyBallCounter > 0) {
                             illegalMove = true;
                         } else {
                             friendlyBallCounter++;
                         }
-
                     } else {
                         enemyBallCounter++;
                     }
@@ -548,6 +547,7 @@ public class AbaloneBoard implements Board, Cloneable {
     private Board moveLineOfBalls(int rowFrom, int diagFrom, int vectorRow,
                                   int vectorDiag, int lastRow, int lastDiag) {
         AbaloneBoard result = (AbaloneBoard) this.clone();
+        
         // The ball that has been overwritten by the balls which are moving in
         // the direction of the ball which executed the move
         int currentRow = lastRow;
@@ -555,11 +555,11 @@ public class AbaloneBoard implements Board, Cloneable {
         int beforeRow = currentRow - vectorRow;
         int beforeDiag = currentDiag - vectorDiag;
         if (!isInsideArray(beforeRow, beforeDiag) 
-            || isOnEdge(beforeRow, beforeDiag)) {
+             || isOnEdge(beforeRow, beforeDiag)) {
             throw new IllegalArgumentException("Invalid coordinates!");
         }
         if (!isInsideArray(currentRow, currentDiag) 
-            || isOnEdge(currentRow, currentDiag)) {
+             || isOnEdge(currentRow, currentDiag)) {
             // Delete Ball, ball will be deleted on the board because it gets
             // replaced by the one which is pushing it outside
             Slot slotBefore = result.board[beforeRow][beforeDiag];
@@ -634,8 +634,8 @@ public class AbaloneBoard implements Board, Cloneable {
     private double calculateGameSituation(Node node) {
         if (node.hasChildren()) {
             Player player = node.getBoard().getNextPlayer();
-            double minMaxOfChildren = calculateGameSituation(node.getChildren()
-                                                                       .get(0));
+            double minMaxOfChildren = calculateGameSituation(
+                                                     node.getChildren().get(0));
             if (player != Player.HUMAN) {
                 for (Node child : node.getChildren()) {
                     double currentValue = calculateGameSituation(child);
@@ -677,9 +677,9 @@ public class AbaloneBoard implements Board, Cloneable {
                                - 1.5 * board.playerBallList.size();
         if (board.isGameOver()) {
             if (Player.HUMAN == board.getWinner()) {
-                winVal = -1.5 * 50000000 / level;
+                winVal = -1.5 * 50000000.0 / (double) level;
             } else {
-                winVal = 50000000 / level;
+                winVal = 50000000.0 / (double) level;
             }
         }
         return boardSize * ballAmountVal + distVal + winVal;
@@ -893,7 +893,7 @@ public class AbaloneBoard implements Board, Cloneable {
                     fromDiag++;
                 }
             }
-            // Delete last whitespace
+            // Delete last whitespace.
             builder.deleteCharAt(builder.length() - 1);
             builder.append("\n");
         }
@@ -915,6 +915,7 @@ public class AbaloneBoard implements Board, Cloneable {
         clone.machineIsBeginner = this.machineIsBeginner;
         clone.playerBallList = new ArrayList<Ball>();
         clone.machineBallList = new ArrayList<Ball>();
+        
         // Copy all balls of the last AbaloneBoard
         for (int i = 0; i < boardSize; i++) {
             for (int j = 0; j < boardSize; j++) {
