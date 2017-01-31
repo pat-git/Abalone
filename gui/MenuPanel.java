@@ -144,8 +144,7 @@ public class MenuPanel extends JPanel {
      * @param function
      *            the function which will be executed
      */
-    private void addShortcut(JButton button, char key,
-                            Runnable function) {
+    private void addShortcut(JButton button, char key, Runnable function) {
         button.setMnemonic(key);
         String actionName = null;
         Action buttonAction = new AbstractAction() {
