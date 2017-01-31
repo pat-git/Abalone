@@ -5,7 +5,6 @@ import java.awt.Color;
 import java.awt.LayoutManager;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.concurrent.Callable;
 import javax.swing.AbstractAction;
 import javax.swing.Action;
 import javax.swing.JButton;
@@ -24,7 +23,6 @@ import javax.swing.KeyStroke;
  * 
  * @version 1.0
  */
-@SuppressWarnings("serial")
 public class MenuPanel extends JPanel {
     
     private JLabel blackBalls;
@@ -62,14 +60,14 @@ public class MenuPanel extends JPanel {
         JLabel labelSize = new JLabel("Size: ");
         
         // options for the board size drop-down-menu.
-        Integer[] options = new Integer[] { 7, 9, 11, 13 };
-        JComboBox<Integer> dropDownSize = new JComboBox<Integer>(options);
+        Integer[] optionsSize = { 7, 9, 11, 13 };
+        JComboBox<Integer> dropDownSize = new JComboBox<Integer>(optionsSize);
         dropDownSize.setSelectedItem(9);
         
         // options for the level drop-down-menu.
-        options = new Integer[] { 1, 2, 3 };
+        Integer[] optionsLevel = { 1, 2, 3 };
         JLabel labelLevel = new JLabel("Level: ");
-        JComboBox<Integer> dropDownLevel = new JComboBox<Integer>(options);
+        JComboBox<Integer> dropDownLevel = new JComboBox<Integer>(optionsLevel);
         dropDownLevel.setSelectedItem(2);
         buttonPanel.setOpaque(false);
         buttonPanel.add(labelSize);
@@ -115,22 +113,19 @@ public class MenuPanel extends JPanel {
         });
         
         // Add shortcuts to the buttons to make the menu more comfortable.
-        addShortcut(buttonNew, 'N', new Callable<Void>() {
-            public Void call() {
+        addShortcut(buttonNew, 'N', new Runnable() {
+            public void run() {
                 boardPanel.createNewGame();
-                return null;
             }
         });
-        addShortcut(buttonSwitch, 'S', new Callable<Void>() {
-            public Void call() {
+        addShortcut(buttonSwitch, 'S', new Runnable() {
+            public void run() {
                 boardPanel.switchGame();
-                return null;
             }
         });
-        addShortcut(buttonQuit, 'Q', new Callable<Void>() {
-            public Void call() {
+        addShortcut(buttonQuit, 'Q', new Runnable() {
+            public void run() {
                 boardPanel.quit();
-                return null;
             }
         });
         buttonPanel.add(buttonNew);
@@ -150,17 +145,13 @@ public class MenuPanel extends JPanel {
      *            the function which will be executed
      */
     private void addShortcut(JButton button, char key,
-                             Callable<Void> function) {
+                            Runnable function) {
         button.setMnemonic(key);
         String actionName = null;
         Action buttonAction = new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent event) {
-                try {
-                    function.call();
-                } catch (Exception exception) {
-                    exception.printStackTrace();
-                }
+                function.run();
             }
         };
         switch (key) {

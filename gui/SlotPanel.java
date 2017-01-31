@@ -10,17 +10,14 @@ import abalone.model.Position;
  * 
  * @version 1.0
  */
-@SuppressWarnings("serial")
 public class SlotPanel extends SelectablePanel {
 
     private Color color;
-    public boolean highlighted;
+    private boolean highlighted;
 
     /**
      * Creates a SlotPanel with the given color and position.
      * 
-     * @param color
-     *            the color of the slot, can not be null
      * @param position
      *            the position of the slot
      */

@@ -8,7 +8,6 @@ import java.awt.Graphics;
  * 
  * @version 1.0
  */
-@SuppressWarnings("serial")
 public class LinePanel extends PlaceholderPanel {
 
     /**

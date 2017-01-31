@@ -1,0 +1,119 @@
+abalone> s
+New game started. You are O.
+abalone> s
+New game started. You are X.
+abalone> s
+New game started. You are O.
+abalone> s
+New game started. You are X.
+abalone> n 7
+New game started. You are X.
+abalone> s
+New game started. You are O.
+abalone> p
+   X X X .
+  X X X X X
+ . . X X . .
+. . . X . . .
+ . . O O . .
+  O O O O O
+   O O O O
+
+abalone> m 1 1 2 2
+Error!  Illegal move!
+abalone> m 1 3 2 3
+abalone> p
+   . X X .
+  X X X X X
+ . . X X . .
+. . O X . . .
+ . . O X . .
+  O O O O O
+   O O . O
+
+abalone> balls
+X: 11
+O: 10
+abalone> m 1 1 0 1
+abalone> p
+   . X X .
+  X . X X X
+ . . X X . .
+. . O X . . .
+ . . O X . .
+  O O O X O
+   . O . O
+
+abalone> balls
+X: 11
+O: 8
+abalone> m 2 3 3 3
+abalone> p
+   . X X .
+  X . X X X
+ . O . X . .
+. . O X . . .
+ . . O X . .
+  O O . X O
+   . O . X
+
+abalone> m 3 3 4 3
+abalone> p
+   . X . .
+  O . X X X
+ . O X X . .
+. . O X . . .
+ . . . X . .
+  O O . X O
+   . O . X
+
+abalone> balls
+X: 10
+O: 7
+abalone> m 2 1 2 2
+abalone> p
+   . X . .
+  O . . X X
+ . O X X . .
+. . X X . . .
+ . O . X . .
+  . O O X O
+   . O . X
+
+abalone> m 2 2 2 3
+Error!  Illegal move!
+abalone> p
+   . X . .
+  O . . X X
+ . O X X . .
+. . X X . . .
+ . O . X . .
+  . O O X O
+   . O . X
+
+abalone> m 1 2 0 2
+abalone> p
+   . X . .
+  O . . . X
+ . O X X . .
+. . X X . . .
+ . O X X . .
+  . O O X O
+   . . . X
+
+abalone> balls
+X: 10
+O: 6
+abalone> m 2 5 3 5
+abalone> p
+   . . . .
+  O . X . X
+ . O X X . .
+. . X X . . .
+ . O X X O .
+  . O O X .
+   . . . X
+
+abalone> m 6 3 7 3
+Sorry! Machine wins.
+abalone> quit

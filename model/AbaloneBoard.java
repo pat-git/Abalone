@@ -844,12 +844,11 @@ public class AbaloneBoard implements Board, Cloneable {
      */
     @Override
     public Color getSlot(int row, int diag) {
-        if(board[row][diag] == null){
+        if (board[row][diag] == null) {
             return null;
-        } else
-        if (board[row][diag].getBall() != null) {
+        } else if (board[row][diag].getBall() != null) {
             return board[row][diag].getColor();
-        }else{
+        } else {
             return Color.NONE;
         }
     }

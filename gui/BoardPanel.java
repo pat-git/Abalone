@@ -24,7 +24,6 @@ import abalone.model.Utility;
  * board does also create an error dialogue if the player is not on the turn and
  * it does also create a normal dialogue if the game is over.
  */
-@SuppressWarnings("serial")
 public class BoardPanel extends JPanel {
 
     private Board abalone;
@@ -115,8 +114,10 @@ public class BoardPanel extends JPanel {
      * balls of the game.
      */
     private void updateBallAmount() {
-        frame.getMenuPanel().setBallAmount(abalone.getNumberOfBalls(Color.BLACK),
-                                         abalone.getNumberOfBalls(Color.WHITE));
+        frame.getMenuPanel().setBallAmount(abalone.getNumberOfBalls(
+                                                                  Color.BLACK), 
+                                           abalone.getNumberOfBalls(
+                                                                  Color.WHITE));
     }
 
     /**
@@ -200,7 +201,7 @@ public class BoardPanel extends JPanel {
                 add(new LinePanel());
             }
             JPanel edgePanel2 = new SelectablePanel(new Position(row, 
-                                                                 maxDiag+ 1));
+                                                                 maxDiag + 1));
             addMouseListener(edgePanel2);
             add(edgePanel2);
             

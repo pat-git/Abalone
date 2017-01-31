@@ -7,7 +7,6 @@ import javax.swing.JPanel;
  * 
  * @version 1.0
  */
-@SuppressWarnings("serial")
 public class PlaceholderPanel extends JPanel {
 
     /**

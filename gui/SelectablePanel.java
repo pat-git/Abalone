@@ -10,7 +10,6 @@ import abalone.model.Position;
  * 
  * @version 1.0
  */
-@SuppressWarnings("serial")
 public class SelectablePanel extends LinePanel {
 
     private Position position;
