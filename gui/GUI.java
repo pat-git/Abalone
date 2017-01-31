@@ -45,6 +45,7 @@ public class GUI extends JFrame {
         getContentPane().add(menuPanel, BorderLayout.SOUTH);
         boardPanel = new BoardPanel(this);
         getContentPane().add(boardPanel, BorderLayout.CENTER);
+        
         // Add window listener to stop the machine move thread if the window is
         // closed
         addWindowListener(new WindowAdapter() {

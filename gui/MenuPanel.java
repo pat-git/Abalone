@@ -41,9 +41,11 @@ public class MenuPanel extends JPanel {
         super(layout);
         blackBalls = new JLabel();
         whiteBalls = new JLabel();
+        
         // Increase the font size of both panels to 30.
         whiteBalls.setFont(whiteBalls.getFont().deriveFont(30.0f));
         blackBalls.setFont(blackBalls.getFont().deriveFont(30.0f));
+        
         // Change the color of the font of both panels.
         whiteBalls.setForeground(Color.WHITE);
         blackBalls.setForeground(Color.BLACK);
@@ -58,10 +60,12 @@ public class MenuPanel extends JPanel {
 
     private void addDropDownMenus(JPanel buttonPanel) {
         JLabel labelSize = new JLabel("Size: ");
+        
         // options for the board size drop-down-menu.
         Integer[] options = new Integer[] { 7, 9, 11, 13 };
         JComboBox<Integer> dropDownSize = new JComboBox<Integer>(options);
         dropDownSize.setSelectedItem(9);
+        
         // options for the level drop-down-menu.
         options = new Integer[] { 1, 2, 3 };
         JLabel labelLevel = new JLabel("Level: ");
@@ -87,6 +91,7 @@ public class MenuPanel extends JPanel {
 
     private void addButtons(JPanel buttonPanel) {
         JButton buttonNew = new JButton("New");
+        
         // Add listener which will listen for a click on the button.
         buttonNew.addActionListener(new ActionListener() {
             @Override
@@ -108,6 +113,7 @@ public class MenuPanel extends JPanel {
                 boardPanel.quit();
             }
         });
+        
         // Add shortcuts to the buttons to make the menu more comfortable.
         addShortcut(buttonNew, 'N', new Callable<Void>() {
             public Void call() {

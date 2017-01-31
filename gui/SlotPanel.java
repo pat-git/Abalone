@@ -45,18 +45,21 @@ public class SlotPanel extends SelectablePanel {
                                                    getPosition().getDiag());
         if (color != null) {
             graphic.setColor(getCircleColor(color));
-            // paint a circle with the color of the slot
+            
+            // paint a circle with the color of the slot.
             graphic.fillOval(0, 0, width - 1, height - 1);
             graphic.setColor(java.awt.Color.BLACK);
-            // paint a black border around the circle to make it look better
+            
+            // paint a black border around the circle to make it look better.
             graphic.drawOval(0, 0, width - 1, height - 1);
         } else {
             throw new IllegalArgumentException("Color can not be null!");
         }
         if (highlighted) {
             graphic.setColor(java.awt.Color.RED);
+            
             // paint a red border around the circle to make it look like its
-            // highlighted
+            // highlighted.
             graphic.drawOval(0, 0, width - 1, height - 1);
         }
     }
@@ -78,7 +81,7 @@ public class SlotPanel extends SelectablePanel {
         } else if (color == Color.WHITE) {
             return java.awt.Color.WHITE;
         } else if (color == Color.NONE) {
-            // define new color (brown)
+            // define new color (brown).
             return new java.awt.Color(139, 90, 43);
         } else {
             throw new IllegalArgumentException("Invalid Color");
@@ -102,7 +105,9 @@ public class SlotPanel extends SelectablePanel {
      *            {@code repaint()} else it will not be highlighted
      */
     public void setHighlighted(boolean highlighted) {
-        this.highlighted = highlighted;
-        repaint();
+        if (this.highlighted != highlighted) {
+            this.highlighted = highlighted;
+            repaint();
+        }
     }
 }
