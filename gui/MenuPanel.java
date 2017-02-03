@@ -60,12 +60,12 @@ public class MenuPanel extends JPanel {
         JLabel labelSize = new JLabel("Size: ");
         
         // options for the board size drop-down-menu.
-        Integer[] optionsSize = { 7, 9, 11, 13 };
+        Integer[] optionsSize = {7, 9, 11, 13};
         JComboBox<Integer> dropDownSize = new JComboBox<Integer>(optionsSize);
         dropDownSize.setSelectedItem(9);
         
         // options for the level drop-down-menu.
-        Integer[] optionsLevel = { 1, 2, 3 };
+        Integer[] optionsLevel = {1, 2, 3};
         JLabel labelLevel = new JLabel("Level: ");
         JComboBox<Integer> dropDownLevel = new JComboBox<Integer>(optionsLevel);
         dropDownLevel.setSelectedItem(2);

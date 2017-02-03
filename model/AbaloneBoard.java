@@ -636,7 +636,7 @@ public class AbaloneBoard implements Board, Cloneable {
             Player player = node.getBoard().getNextPlayer();
             double minMaxOfChildren = calculateGameSituation(
                                                      node.getChildren().get(0));
-            if (player != Player.HUMAN) {
+            if (player == Player.HUMAN) {
                 for (Node child : node.getChildren()) {
                     double currentValue = calculateGameSituation(child);
                     if (currentValue < minMaxOfChildren) {

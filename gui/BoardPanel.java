@@ -4,6 +4,9 @@ import java.awt.GridLayout;
 import java.awt.Toolkit;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.LinkedList;
+import java.util.List;
+
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
@@ -28,6 +31,7 @@ public class BoardPanel extends JPanel {
 
     private Board abalone;
     private GameFrame frame;
+    private List<SlotPanel> slots;
     private int boardSize;
     private int level;
     private Thread machineMoveThread;
@@ -48,7 +52,7 @@ public class BoardPanel extends JPanel {
         setLayout(new GridLayout(boardSize + 2, boardSize * 2));
         setupGrid();
         
-        // sets the background to color brown
+        // sets the background to color brown.
         setBackground(new java.awt.Color(130, 70, 20));
         updateBallAmount();
         frame.getMenuPanel().setBoardPanel(this);
@@ -63,7 +67,7 @@ public class BoardPanel extends JPanel {
     private void performMachineMove() {
         Runnable updateGUI = new Runnable() {
             public void run() {
-                repaint();
+                updateGrid();
                 updateBallAmount();
                 if (abalone.isGameOver()) {
                     createWinDialog();
@@ -107,6 +111,17 @@ public class BoardPanel extends JPanel {
         addPanels();
         repaint();
         revalidate();
+    }
+
+    /**
+     * Updates the Grid by changing the color of each slot panel to the
+     * representing slot in the Abalone game board.
+     */
+    private void updateGrid() {
+        for (SlotPanel slot : slots) {
+            slot.setColor(abalone.getSlot(slot.getPosition().getRow(), 
+                          slot.getPosition().getDiag()));
+        }
     }
 
     /**
@@ -168,6 +183,7 @@ public class BoardPanel extends JPanel {
      * Adds all Panels to the board panel.
      */
     private void addPanels() {
+        slots = new LinkedList<SlotPanel>();
         for (int row = boardSize; row >= -1; row--) {
             int minDiag = Utility.minDiag(row, boardSize);
             int maxDiag = Utility.maxDiag(row, boardSize);
@@ -192,7 +208,9 @@ public class BoardPanel extends JPanel {
             for (int diag = minDiag; diag <= maxDiag; diag++) {
                 JPanel panelToAdd;
                 if (row < boardSize && row >= 0) {
-                    panelToAdd = new SlotPanel(new Position(row, diag));
+                    panelToAdd = new SlotPanel(new Position(row, diag), 
+                                               abalone.getSlot(row, diag));
+                    slots.add((SlotPanel) panelToAdd);
                 } else {
                     panelToAdd = new SelectablePanel(new Position(row, diag));
                 }
@@ -335,7 +353,7 @@ public class BoardPanel extends JPanel {
                 Board result = abalone.move(rowFrom, diagFrom, rowTo, diagTo);
                 if (result != null) {
                     abalone = result;
-                    repaint();
+                    updateGrid();
                     updateBallAmount();
                     if (abalone.isGameOver()) {
                         playerMoveBlocked = true;

@@ -47,7 +47,7 @@ public final class GameFrame extends JFrame {
         getContentPane().add(boardPanel, BorderLayout.CENTER);
         
         // Add window listener to stop the machine move thread if the window is
-        // closed
+        // closed.
         addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosed(WindowEvent event) {

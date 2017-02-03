@@ -20,9 +20,12 @@ public class SlotPanel extends SelectablePanel {
      * 
      * @param position
      *            the position of the slot
+     * @param color
+     *            the color of the slot
      */
-    public SlotPanel(Position position) {
+    public SlotPanel(Position position, Color color) {
         super(position);
+        this.color = color;
     }
 
     /**
@@ -38,15 +41,13 @@ public class SlotPanel extends SelectablePanel {
         int height = getHeight();
         int width = getWidth();
         super.paintComponent(graphic);
-        color = ((BoardPanel) getParent()).getSlot(getPosition().getRow(),
-                                                   getPosition().getDiag());
         if (color != null) {
             graphic.setColor(getCircleColor(color));
-            
+
             // paint a circle with the color of the slot.
             graphic.fillOval(0, 0, width - 1, height - 1);
             graphic.setColor(java.awt.Color.BLACK);
-            
+
             // paint a black border around the circle to make it look better.
             graphic.drawOval(0, 0, width - 1, height - 1);
         } else {
@@ -54,7 +55,7 @@ public class SlotPanel extends SelectablePanel {
         }
         if (highlighted) {
             graphic.setColor(java.awt.Color.RED);
-            
+
             // paint a red border around the circle to make it look like its
             // highlighted.
             graphic.drawOval(0, 0, width - 1, height - 1);
@@ -72,7 +73,7 @@ public class SlotPanel extends SelectablePanel {
      *             if the color is invalid
      */
     private java.awt.Color getCircleColor(Color color)
-            throws IllegalArgumentException {
+                           throws IllegalArgumentException {
         if (color == Color.BLACK) {
             return java.awt.Color.BLACK;
         } else if (color == Color.WHITE) {
@@ -92,6 +93,20 @@ public class SlotPanel extends SelectablePanel {
      */
     public Color getColor() {
         return color;
+    }
+
+    /**
+     * Sets the color of the slot and repaints it. If the color is the same
+     * color as before the panel will not be repainted.
+     * 
+     * @param color
+     *            the new color
+     */
+    public void setColor(Color color) {
+        if (!this.color.equals(color)) {
+            this.color = color;
+            repaint();
+        }
     }
 
     /**
