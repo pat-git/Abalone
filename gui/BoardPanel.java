@@ -374,17 +374,4 @@ public class BoardPanel extends JPanel {
         }
         return false;
     }
-
-    /**
-     * Gets the color of one slot of the game board of the game Abalone.
-     * 
-     * @param row
-     *            the row coordinates of the slot
-     * @param diag
-     *            the diagonal coordinates of the slot
-     * @return the color of the slot
-     */
-    public Color getSlot(int row, int diag) {
-        return abalone.getSlot(row, diag);
-    }
 }
