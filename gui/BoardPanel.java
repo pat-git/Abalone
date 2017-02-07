@@ -6,7 +6,6 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.LinkedList;
 import java.util.List;
-
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
@@ -120,7 +119,7 @@ public class BoardPanel extends JPanel {
     private void updateGrid() {
         for (SlotPanel slot : slots) {
             slot.setColor(abalone.getSlot(slot.getPosition().getRow(), 
-                          slot.getPosition().getDiag()));
+                                          slot.getPosition().getDiag()));
         }
     }
 
